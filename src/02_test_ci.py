@@ -35,16 +35,12 @@ def test(model, dataloader):
     tn_ = 0
     fp_ = 0
     fn_ = 0
-    for image, gt, transcription,_ in tqdm(dataloader, desc='Test', leave=False):
+    for image, gt, _ ,_ in tqdm(dataloader, desc='Test', leave=False):
         image, gt = image.to(device), gt.to(device)
         image, gt = Variable(image), Variable(gt)
         
-        out, _, attn = model(image)
+        out, _, _ = model(image)
         out = out.transpose(0, 1)
-        attn = attn.transpose(0, 1)
-        
-        out = torch.sigmoid(out)
-        attn = torch.sigmoid(attn)
         
         fnc = lambda x: 1 if x >= 0.5 else 0
         

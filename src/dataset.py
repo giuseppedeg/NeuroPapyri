@@ -81,6 +81,8 @@ class Dataset_ci(nn.Module):
                 target = literal_eval(row[1])
                 transcription = literal_eval(row[2])
                 original_filepath = row[4]
+                transcription = ['Σ' if x=='Ϲ' else x for x in transcription]
+                target[17] = 1 if ('Σ' in transcription) or ('σ' in transcription) else 0
                 files.append(file)
                 targets.append(target)
                 transcriptions.append(transcription)
